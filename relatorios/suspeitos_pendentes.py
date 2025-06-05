@@ -50,6 +50,6 @@ if __name__ == "__main__":
         print(f"Uso: python {titulo}.py <codigo_loja>")
         sys.exit(1)
 
-    loja = sys.argv[1]
+    loja = int(sys.argv[1])
     dados = carregar_dados(baixar_relatorio(1334), baixar_relatorio(1416))
     gerar_pdf(base=dados, loja=loja, title=f'{titulo}_{loja}')
