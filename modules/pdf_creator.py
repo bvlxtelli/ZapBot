@@ -66,17 +66,19 @@ def gerar_pdf(base=None, loja=None, title=None):
                     if row > 0:
                         cell.set_facecolor("0.95" if row % 2 == 0 else "white")
 
-                with open(f'exports/{title}.pdf', 'wb') as f:
-                    f.write(pdf_buffer.getvalue())
-                caminho = f'exports/{title}.pdf'
                 pdf.savefig(fig, bbox_inches="tight")
-                print(caminho)  # importante: imprime caminho para o Node.js ler
                 plt.close()
                 
                 contador_de_linhas += 45
 
         pdf_buffer.seek(0)
         print(f"PDF da Loja {loja} gerado em memória.")
+
+        os.makedirs('exports', exist_ok=True)
+        with open(f'exports/{title}.pdf', 'wb') as f:
+            f.write(pdf_buffer.getvalue())
+
+        print(f'exports/{title}.pdf') 
     
         return pdf_buffer
 
