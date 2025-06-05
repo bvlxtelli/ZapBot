@@ -105,7 +105,7 @@ def get_relatorio(x,y):
     num_relatorio = x
     relatorio = f"https://bapi.bistek.com.br/relatorio/{num_relatorio}/csv"
 
-    print(f"""[ {pd.Timestamp.now()} ] Gerando relatório {num_relatorio}... """)
+    print(f"""[ {pd.Timestamp.now()} ] Gerando relatorio {num_relatorio}... """)
 
     if num_relatorio != 1334:
 
@@ -140,7 +140,7 @@ def get_relatorio(x,y):
 
             output.seek(0)
     
-    print(f"""[ {pd.Timestamp.now()} ] Relatório CSV gerado em buffer! ✅""")
+    print(f"""[ {pd.Timestamp.now()} ] Relatorio CSV gerado em buffer!""")
 
     if num_relatorio != 1334:
 
@@ -156,19 +156,19 @@ def get_params(numero):
 
 def baixar_relatorio(x):
 
-    print(f"""[ {pd.Timestamp.now()} ] Gerando relatório {x}... """)
+    print(f"""[ {pd.Timestamp.now()} ] Gerando relatorio {x}... """)
 
     if x in _relatorios_cache:
         
-        print(f"[ {pd.Timestamp.now()} ] Relatório {x} carregado do cache ✅")
+        print(f"[ {pd.Timestamp.now()} ] Relatorio {x} carregado do cache ")
         return _relatorios_cache[x]
 
     y = get_relatorio(x, get_params(x))
     y = pd.read_csv(y, delimiter=';')
     _relatorios_cache[x] = y
 
-    print(f"[ {pd.Timestamp.now()} ] Relatório {x} baixado e armazenado em cache ✅")
+    print(f"[ {pd.Timestamp.now()} ] Relatorio {x} baixado e armazenado em cache ")
 
     return y
 
-print(f"[ {pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")} ] Módulo {titulo} carregado")
+print(f"[ {pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")} ] Modulo {titulo} carregado")

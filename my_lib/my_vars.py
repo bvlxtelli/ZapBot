@@ -21,6 +21,7 @@ import time
 import urllib3
 from urllib import parse
 from io import StringIO
+import sys
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
