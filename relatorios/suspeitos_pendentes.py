@@ -52,4 +52,4 @@ if __name__ == "__main__":
 
     loja = sys.argv[1]
     dados = carregar_dados(baixar_relatorio(1334), baixar_relatorio(1416))
-    gerar_pdf(base=dados, loja=loja, titulo=f'{titulo}_{loja}')
+    gerar_pdf(base=dados, loja=loja, title=f'{titulo}_{loja}')
