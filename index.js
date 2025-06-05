@@ -89,7 +89,9 @@ client.on('message', async message => {
         else if (comando.includes('pend')) sugestao = '!pendentes';
 
         let resposta = `Comando não reconhecido ❌\n`;
-        resposta += sugestao ? `Você quis dizer *${sugestao}*? 🤔` : `Use *!tabela* ou *!pendentes* seguido do código da loja.`;
+        resposta += sugestao ? `Você quis dizer *${sugestao}*? 🤔` :
+        `\nComandos disponíveis:\n
+        \n*!pendentes (loja)* - Extrai os suspeitos pendentes da loja citada.`;
 
         message.reply(resposta);
     }
