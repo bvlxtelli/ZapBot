@@ -4,3 +4,4 @@ __pycache__/
 node_modules/
 teste.ipynb
 relatorios/exports/
+exports/
