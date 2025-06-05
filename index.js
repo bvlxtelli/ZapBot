@@ -1,23 +1,49 @@
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const { exec } = require('child_process');
+const fs = require('fs');
+const now = new Date();
 
-// Usando autenticação local (salva o login no computador)
-const client = new Client({
-    authStrategy: new LocalAuth()
-});
+const client = new Client();
 
-client.on('qr', qr => {
-    // Mostra QR code no terminal para escanear com o WhatsApp
-    qrcode.generate(qr, { small: true });
-});
+client.on('qr', qr => qrcode.generate(qr, { small: true }));
 
 client.on('ready', () => {
-    console.log('Bot está pronto!');
+    console.log(`[${now}] Bot está pronto!`);
 });
 
-client.on('message', message => {
-    if (message.body === '!ping') {
-        message.reply('pong 🏓');
+client.on('message', async message => {
+    // Ex: !tabela 123
+    if (message.body.startsWith('!tabela')) {
+        const partes = message.body.split(' ');
+        const loja = partes[1];
+
+        if (!loja) {
+            message.reply('Informe o código da loja. Ex: !tabela 123');
+            return;
+        }
+
+        message.reply(`Gerando relatório da loja ${loja}...`);
+
+        exec(`python relatorios/gerar_tabela.py ${loja}`, async (err, stdout, stderr) => {
+            if (err) {
+                console.error(stderr);
+                message.reply('Erro ao gerar relatório ❌');
+                return;
+            }
+
+            const caminho = stdout.toString().trim();
+
+            if (!fs.existsSync(caminho)) {
+                message.reply('Relatório não encontrado 😕');
+                return;
+            }
+
+            const media = MessageMedia.fromFilePath(caminho);
+            await client.sendMessage(message.from, media, {
+                caption: `Relatório da loja ${loja} 📊`
+            });
+        });
     }
 });
 
