@@ -1,10 +1,10 @@
 from my_lib import *
 
-def gerar_pdf(base=None, loja=None, titulo=None):
+def gerar_pdf(base=None, loja=None, title=None):
 
     rel = base
     
-    if 'SEM VENDA' in titulo:
+    if 'SEM VENDA' in title:
         
         rel.to_excel(f'C:\\Users\\Usuario\\Downloads\\ESPELHO - ITENS SEM VENDA - {hj}.xlsx', index=False)
     
@@ -13,7 +13,7 @@ def gerar_pdf(base=None, loja=None, titulo=None):
         a = copia_do_relatorio[copia_do_relatorio['LOJA'] == loja][colunas].reset_index(drop=True)
         skus = a['LOJA'].value_counts().get(loja, 0)
 
-    if 'PENDENTES' in titulo or 'pendentes' in titulo:
+    if 'suspeitos_pendentes' in title:
 
         colunas = ['DPTO', 'SECAO', 'CODIGO', 'DESCRICAO', 'FILIAL']
         copia_do_relatorio = rel.copy()
@@ -33,13 +33,13 @@ def gerar_pdf(base=None, loja=None, titulo=None):
     contador_de_linhas = 0
     pdf_buffer = io.BytesIO()
 
-    if 'PENDENTES' in titulo or 'SEM VENDA' in titulo or 'pendentes' in titulo: 
+    if 'SEM VENDA' in title or 'suspeitos_pendentes' in title: 
 
         with PdfPages(pdf_buffer) as pdf:
         
             while contador_de_linhas < skus:
 
-                if 'SEM VENDA' in titulo or 'PENDENTES' in titulo:
+                if 'SEM VENDA' in title or 'suspeitos_pendentes' in title:
                     b = a.iloc[contador_de_linhas:(contador_de_linhas + 45)]
 
                 fig, ax = plt.subplots(figsize=(len(b.columns) * 1.5, 1))
@@ -66,9 +66,10 @@ def gerar_pdf(base=None, loja=None, titulo=None):
                     if row > 0:
                         cell.set_facecolor("0.95" if row % 2 == 0 else "white")
 
-                os.makedirs('./relatorios/exports', exist_ok=True)
-                caminho = f'./relatorios/exports/{titulo}_{loja}.pdf'
-                plt.savefig(caminho, bbox_inches='tight')
+                with open(f'exports/{title}.pdf', 'wb') as f:
+                    f.write(pdf_buffer.getvalue())
+                caminho = f'exports/{title}.pdf'
+                pdf.savefig(fig, bbox_inches="tight")
                 print(caminho)  # importante: imprime caminho para o Node.js ler
                 plt.close()
                 
@@ -79,7 +80,7 @@ def gerar_pdf(base=None, loja=None, titulo=None):
     
         return pdf_buffer
 
-    if 'QUEBRA' in titulo or 'VENCIDOS' in titulo:
+    if 'QUEBRA' in title or 'VENCIDOS' in title:
     
         copia = base.copy()
 
@@ -91,10 +92,10 @@ def gerar_pdf(base=None, loja=None, titulo=None):
         copia['R$'] = pd.to_numeric(copia['R$'], errors='coerce').round(2)
         copia['R$'] = 'R$ ' + copia['R$'].apply(lambda x: f'{x:.2f}')
 
-        if 'MAIORES' in titulo:
+        if 'MAIORES' in title:
             data_periodo = f'{anteont} à {ont}' if dia_da_semana != 'Segunda' else f'{sex} à {ont}'
         
-        elif 'VENCIDOS' in titulo:
+        elif 'VENCIDOS' in title:
             data_periodo = f'{seg_pass} à {ont}'
 
         with PdfPages(pdf_buffer) as pdf:
@@ -102,7 +103,7 @@ def gerar_pdf(base=None, loja=None, titulo=None):
             for i in range(0, len(copia), 50):
                 b = copia.iloc[i:i+50]
                 fig, ax = plt.subplots(figsize=(len(b.columns) * 2, 1))
-                plt.suptitle(f'{titulo} - {data_periodo}', fontsize=16, fontweight='bold', y=(len(b) * 0.12))
+                plt.suptitle(f'{title} - {data_periodo}', fontsize=16, fontweight='bold', y=(len(b) * 0.12))
 
                 ax.axis('tight')
                 ax.axis('off')
