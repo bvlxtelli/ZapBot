@@ -3,9 +3,23 @@ const qrcode = require('qrcode-terminal');
 const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
-const now = new Date();
-
 const client = new Client();
+
+function formatDate(date) {
+    const pad = (n) => n.toString().padStart(2, '0');
+  
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1); // meses vão de 0 a 11
+    const year = date.getFullYear();
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+  
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+const agora = new Date();
+const now = formatDate(agora);
 
 client.on('qr', qr => qrcode.generate(qr, { small: true }));
 
@@ -60,7 +74,8 @@ client.on('message', async message => {
             return;
         }
 
-        const caminho = stdout.toString().trim();
+        const linhas = stdout.toString().trim().split('\n');
+        const caminho = linhas[linhas.length - 1].trim();
 
         if (!fs.existsSync(caminho)) {
             message.reply('Relatório não encontrado 😕');
