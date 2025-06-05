@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
+titulo = 'teste'
+
 def gerar_relatorio(loja):
     # Simulação: dados variam conforme o código da loja
     dados = {
@@ -22,8 +24,8 @@ def gerar_relatorio(loja):
     ax.axis('off')
     ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
 
-    os.makedirs('./relatorios', exist_ok=True)
-    caminho = f'./relatorios/tabela_{loja}.png'
+    os.makedirs('./relatorios/exports', exist_ok=True)
+    caminho = f'./relatorios/exports/{titulo}_{loja}.pdf'
     plt.savefig(caminho, bbox_inches='tight')
     print(caminho)  # importante: imprime caminho para o Node.js ler
 
