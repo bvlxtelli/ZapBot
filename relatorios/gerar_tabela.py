@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
+"""Commit Test"""
+
 titulo = 'teste'
 
 def gerar_relatorio(loja):
