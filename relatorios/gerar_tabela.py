@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-"""Teste"""
-
 titulo = 'teste'
 
 def gerar_relatorio(loja):
