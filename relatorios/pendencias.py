@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-
 def gerar_relatorio(loja):
     # Simulação: dados variam conforme o código da loja
     dados = {
@@ -24,13 +23,13 @@ def gerar_relatorio(loja):
     ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
 
     os.makedirs('./relatorios/exports', exist_ok=True)
-    caminho = f'./relatorios/exports/tabela_{loja}.pdf'
+    caminho = f'./relatorios/exports/pendencias_{loja}.pdf'
     plt.savefig(caminho, bbox_inches='tight')
     print(caminho)  # importante: imprime caminho para o Node.js ler
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Uso: python gerar_tabela.py <codigo_loja>")
+        print("Uso: python pendencias.py <codigo_loja>")
         sys.exit(1)
 
     loja = sys.argv[1]
