@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Este projeto é um bot WhatsApp que automatiza a geração e envio de relatórios específicos para cada loja de uma rede, através de comandos simples no próprio WhatsApp. A solução integra Node.js e Python para oferecer agilidade, praticidade e maior autonomia aos gestores, facilitando a tomada de decisões em tempo real.
+Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relatórios específicos para cada loja de uma rede, através de comandos simples no próprio **WhatsApp**. A solução integra **Node.js** e **Python** para oferecer agilidade, praticidade e maior autonomia aos gestores, facilitando a tomada de decisões em tempo real.
 
 ---
 
@@ -10,7 +10,7 @@ Este projeto é um bot WhatsApp que automatiza a geração e envio de relatório
 
 - Reduzir o tempo e complexidade na obtenção de relatórios por loja.
 - Eliminar processos manuais e múltiplos acessos a sistemas distintos.
-- Utilizar um canal de comunicação já amplamente adotado pela equipe: o WhatsApp.
+- Utilizar um canal de comunicação já amplamente adotado pela equipe: o **WhatsApp**.
 
 ---
 
@@ -80,8 +80,8 @@ Este projeto é um bot WhatsApp que automatiza a geração e envio de relatório
 
 ### Observações
 
-- Os scripts Python devem imprimir no final o caminho do arquivo gerado para que o bot possa localizar e enviar o arquivo.
-- Ambiente com Node.js e Python configurados corretamente é fundamental para o funcionamento.
+- Os scripts **Python** devem imprimir no final o caminho do arquivo gerado para que o bot possa localizar e enviar o arquivo.
+- Ambiente com **Node.js** e **Python** configurados corretamente é fundamental para o funcionamento.
 
 ### Contato
 
