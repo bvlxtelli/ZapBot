@@ -4,15 +4,11 @@
 
 Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relatórios específicos para cada loja de uma rede, através de comandos simples no próprio **WhatsApp**. A solução integra **Node.js** e **Python** para oferecer agilidade, praticidade e maior autonomia aos gestores, facilitando a tomada de decisões em tempo real.
 
----
-
 ## Desafio
 
 - Reduzir o tempo e complexidade na obtenção de relatórios por loja.
 - Eliminar processos manuais e múltiplos acessos a sistemas distintos.
 - Utilizar um canal de comunicação já amplamente adotado pela equipe: o **WhatsApp**.
-
----
 
 ## Solução
 
@@ -20,8 +16,6 @@ Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relat�
 - Execução dinâmica de scripts Python para gerar relatórios sob demanda, utilizando o código da loja como parâmetro.
 - Envio automático dos arquivos gerados para o usuário via WhatsApp.
 - Feedback instantâneo sobre status do processo, erros e sugestões de comandos.
-
----
 
 ## Tecnologias Utilizadas
 
@@ -33,8 +27,6 @@ Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relat�
 | **child_process**    | Execução dos scripts Python via Node.js         |
 | **qrcode-terminal**  | Exibição do QR code para autenticação do bot    |
 
----
-
 ## Impacto e Resultados
 
 - **Agilidade**: Relatórios acessados em minutos via WhatsApp, sem necessidade de sistemas adicionais.
@@ -42,7 +34,17 @@ Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relat�
 - **Redução de Erros**: Automação diminui retrabalho e falhas comuns em processos manuais.
 - **Escalabilidade**: Fácil inclusão de novos tipos de relatórios e comandos.
 
----
+## Autenticação Persistente
+
+O bot utiliza o recurso `LocalAuth` da biblioteca `whatsapp-web.js`, que permite manter a sessão ativa mesmo após reinicializações.
+
+```js
+const client = new Client({
+    authStrategy: new LocalAuth({
+        clientId: 'ZapBot'
+    })
+});
+```
 
 ## Como Usar
 
@@ -54,16 +56,12 @@ Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relat�
 4. Execute o bot com `node index.js`
 5. Escaneie o QR code exibido para autenticar seu WhatsApp Web.
 
----
-
 ## Comandos disponíveis
 
 |   Comando                         |	Descrição	                            |   Exemplo         |
 |-----------------------------------|-------------------------------------------|-------------------|
 |   **!tabela** <codigo_loja>	    |   Gera e envia a tabela da loja	        |   !tabela 123     |
 |   **!pendencias** <codigo_loja>	|   Gera relatório de pendências da loja	|   !pendencias 123 |
-
----
 
 ### Estrutura do Projeto
 ```bash
@@ -75,8 +73,6 @@ Este projeto é um bot **WhatsApp** que automatiza a geração e envio de relat�
 ├── package.json
 └── README.md
 ```
-
----
 
 ### Observações
 
