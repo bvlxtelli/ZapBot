@@ -46,8 +46,8 @@ client.on('message', async message => {
         if (comando === '!tabela') {
             script = 'relatorios/gerar_tabela.py';
             relatorio = 'Tabela';
-        } else if (comando === '!pendentes') {
-            script = 'relatorios/suspeitos_pendentes.py';
+        } else if (comando === '!pendencias') {
+            script = 'relatorios/pendencias.py';
             relatorio = 'Suspeitos pendentes';
         }
 
@@ -86,12 +86,13 @@ client.on('message', async message => {
         // Tentativa de sugestão com base em erros comuns
         let sugestao = '';
         if (comando.includes('tabel')) sugestao = '!tabela';
-        else if (comando.includes('pend')) sugestao = '!pendentes';
+        else if (comando.includes('pend')) sugestao = '!pendencias';
 
         let resposta = `Comando não reconhecido ❌\n`;
         resposta += sugestao ? `Você quis dizer *${sugestao}*? 🤔` :
         `\nComandos disponíveis:\n
-        \n*!pendentes (loja)* - Extrai os suspeitos pendentes da loja citada.`;
+        \n*!pendencias (loja)* - Extrai as pendencias da loja citada.
+        \n*!tabela (loja)* - Gera a tabela da loja citada.`;
 
         message.reply(resposta);
     }
