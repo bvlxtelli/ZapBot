@@ -1,9 +1,14 @@
-const { Client, MessageMedia } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
-const client = new Client();
+
+const client = new Client({
+    authStrategy: new LocalAuth({
+        clientId: 'ZapBot'
+    })
+});
 
 function formatDate(date) {
     const pad = (n) => n.toString().padStart(2, '0');
@@ -32,7 +37,7 @@ client.on('message', async message => {
     const comando = partes[0];
     const loja = partes[1];
 
-    if (['!tabela', '!pendentes'].includes(comando)) {
+    if (['!tabela', '!pendencias'].includes(comando)) {
         if (!loja) {
             message.reply(`Informe o código da loja. Ex: ${comando} 123`);
             return;
@@ -48,7 +53,7 @@ client.on('message', async message => {
             relatorio = 'Tabela';
         } else if (comando === '!pendencias') {
             script = 'relatorios/pendencias.py';
-            relatorio = 'Suspeitos pendentes';
+            relatorio = 'Pendências';
         }
 
         exec(`python ${script} ${loja}`,
